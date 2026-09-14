@@ -1,21 +1,37 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 🎓 EduBot — Education App Chatbot
 
-# Run and deploy your AI Studio app
+## Project Overview
+EduBot is an intelligent rule-based chatbot designed for an Education App.
+It answers student queries even when they contain spelling mistakes,
+incomplete sentences, or inconsistent letter casing.
 
-This contains everything you need to run your app locally.
+## Features
+- ✅ Spelling mistake tolerance (fuzzy matching)
+- ✅ Incomplete question handling
+- ✅ Case-insensitive parsing
+- ✅ 20+ education-related topics
+- ✅ Real-time chat interface
+- ✅ No external API required (fully offline logic)
 
-View your app in AI Studio: https://ai.studio/apps/65bff56e-0447-4e57-b648-7197d9fb7150
+## Technology Stack
+| Component | Technology |
+|-----------|------------|
+| Language  | Python 3.9+ |
+| UI        | Streamlit  |
+| Matching  | Difflib (fuzzy string matching) |
+| Algorithm | Weighted scoring: string similarity + keyword hits + fuzzy hits |
 
-## Run Locally
+## How It Works
+1. User input is normalized (lowercase, punctuation removed)
+2. Each word is spell-corrected using `difflib.get_close_matches`
+3. Query is scored against every knowledge-base entry using:
+   - 35% — full-string fuzzy similarity
+   - 45% — exact keyword match ratio
+   - 20% — fuzzy keyword match ratio
+4. Best-matching entry above threshold (0.30) returns its answer
+5. Otherwise, a fallback suggestion list is shown
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
-
-
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## How to Run
+```bash
+pip install -r requirements.txt
+streamlit run edubot.py
